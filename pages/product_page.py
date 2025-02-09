@@ -7,7 +7,7 @@ class ProductPage(Basepage):
         assert self.is_element_present(*ProductPageLocators.ADD_TO_BASKET_BUTTON), \
             "Add to basket button is not presented"
 
-    def add_to_basket_button(self):
+    def add_to_basket(self):
         self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON).click()
 
     def same_names_of_products(self):
@@ -21,3 +21,11 @@ class ProductPage(Basepage):
         main_price = self.browser.find_element(*ProductPageLocators.MAIN_PRICE).text
         assert price_in_alert == main_price, \
             "The basket value must match the product price"
+
+    def guest_cant_see_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESAGES), \
+            "The success message should not be shown"
+
+    def guest_cant_see_disappeared_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESAGES), \
+            "The success message should not be shown"
