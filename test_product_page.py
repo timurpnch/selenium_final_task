@@ -6,12 +6,14 @@ from .pages.basket_page import BasketPage
 from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 
+link = 'https://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/'
+
 
 @pytest.mark.user_add_to_basket
 class TestUserAddToBasketFromProductPage():
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser):
-        self.link = 'https://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/'
+        self.link = link
         page = ProductPage(browser, self.link)
         page.open()
         page.go_to_login_page()
@@ -62,7 +64,6 @@ def test_guest_can_add_product_to_basket(browser, link):
 
 @pytest.mark.skip
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
-    link = 'https://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/'
     page = ProductPage(browser, link)
     page.open()
     page.add_to_basket()
@@ -71,7 +72,6 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
 
 @pytest.mark.skip
 def test_guest_cant_see_success_message(browser):
-    link = 'https://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/'
     page = ProductPage(browser, link)
     page.open()
     page.guest_cant_see_message()
@@ -79,7 +79,6 @@ def test_guest_cant_see_success_message(browser):
 
 @pytest.mark.skip
 def test_message_disappeared_after_adding_product_to_basket(browser):
-    link = 'https://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/'
     page = ProductPage(browser, link)
     page.open()
     page.add_to_basket()
