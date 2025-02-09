@@ -23,9 +23,9 @@ class ProductPage(Basepage):
             "The basket value must match the product price"
 
     def guest_cant_see_message(self):
-        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESAGES), \
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGES), \
             "The success message should not be shown"
 
     def guest_cant_see_disappeared_message(self):
-        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESAGES), \
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGES), \
             "The success message should not be shown"

@@ -1,8 +1,40 @@
+import time
+
 import pytest
 
+from .pages.basket_page import BasketPage
 from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
-from .pages.basket_page import BasketPage
+
+
+@pytest.mark.user_add_to_basket
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        self.link = 'https://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/'
+        page = ProductPage(browser, self.link)
+        page.open()
+        page.go_to_login_page()
+        login_page = LoginPage(browser, self.link)
+        login_page.register_new_user(str(time.time()) + "@fakemail.org", str(time.time()))
+        page.should_be_authorized_user()
+
+    def test_user_cant_see_success_message(self, browser):
+        link = self.link
+        page = ProductPage(browser, link)
+        page.open()
+        page.guest_cant_see_message()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = self.link
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_be_add_to_basket_button()
+        page.add_to_basket()
+        # page.solve_quiz_and_get_code()
+        page.same_names_of_products()
+        page.same_prices_of_products()
+
 
 @pytest.mark.skip
 @pytest.mark.parametrize('link', ["http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
@@ -34,6 +66,7 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     page.open()
     page.add_to_basket()
     page.guest_cant_see_message()
+
 
 @pytest.mark.skip
 def test_guest_cant_see_success_message(browser):
